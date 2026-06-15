@@ -1,0 +1,688 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>STUDIO M | Boutique Exclusiva</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Urbanist:wght@200;400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    
+    <style>
+        :root {
+            --bg-color: #0A0A0A;
+            --panel-bg: #121212;
+            --accent: #D4AF37; /* Oro Viejo */
+            --text-main: #FFFFFF;
+            --text-muted: #A0A0A0;
+            --border: #222222;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Urbanist', sans-serif;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            overflow-x: hidden;
+            transition: filter 0.3s ease;
+        }
+
+        /* --- HEADER / NAVEGACIÓN --- */
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 30px 8%;
+            border-bottom: 1px solid var(--border);
+            position: sticky;
+            top: 0;
+            background-color: rgba(10, 10, 10, 0.9);
+            backdrop-filter: blur(10px);
+            z-index: 100;
+        }
+
+        .logo {
+            font-size: 24px;
+            font-weight: 600;
+            letter-spacing: 4px;
+            color: var(--text-main);
+            cursor: pointer;
+        }
+
+        .logo span {
+            color: var(--accent);
+        }
+
+        .nav-icons {
+            display: flex;
+            gap: 25px;
+            font-size: 18px;
+        }
+
+        .icon-btn {
+            background: none;
+            border: none;
+            color: var(--text-main);
+            cursor: pointer;
+            position: relative;
+            transition: color 0.3s ease;
+        }
+
+        .icon-btn:hover {
+            color: var(--accent);
+        }
+
+        .badge {
+            position: absolute;
+            top: -8px;
+            right: -10px;
+            background-color: var(--accent);
+            color: #000;
+            font-size: 11px;
+            font-weight: 600;
+            padding: 2px 6px;
+            border-radius: 50%;
+        }
+
+        .timer-display {
+            font-size: 14px;
+            color: var(--accent);
+            margin-right: 15px;
+            font-weight: 400;
+            letter-spacing: 1px;
+            display: none;
+        }
+
+        /* --- HERO BANNER --- */
+        .hero {
+            text-align: center;
+            padding: 80px 20px 40px 20px;
+        }
+
+        .hero h1 {
+            font-size: 48px;
+            font-weight: 200;
+            letter-spacing: 8px;
+            margin-bottom: 15px;
+            text-transform: uppercase;
+        }
+
+        .hero p {
+            color: var(--text-muted);
+            font-size: 16px;
+            letter-spacing: 2px;
+        }
+
+        /* --- CATÁLOGO DE PRODUCTOS --- */
+        .catalog {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 40px 8%;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 40px;
+        }
+
+        .product-card {
+            background-color: transparent;
+            border: 1px solid var(--border);
+            padding: 15px;
+            position: relative;
+            transition: border-color 0.4s ease;
+        }
+
+        .product-card:hover {
+            border-color: var(--accent);
+        }
+
+        .img-container {
+            width: 100%;
+            height: 400px;
+            background-color: #151515;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .img-container img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.6s ease;
+        }
+
+        .product-card:hover .img-container img {
+            transform: scale(1.03);
+        }
+
+        .fav-card-btn {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: rgba(10, 10, 10, 0.7);
+            border: none;
+            color: white;
+            width: 35px;
+            height: 35px;
+            border-radius: 50%;
+            display: grid;
+            place-items: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .fav-card-btn:hover {
+            color: #ff4b4b;
+            transform: scale(1.1);
+        }
+
+        .fav-card-btn.active {
+            color: #ff4b4b;
+        }
+
+        .product-info {
+            margin-top: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+        }
+
+        .product-title {
+            font-size: 18px;
+            font-weight: 400;
+            letter-spacing: 1px;
+        }
+
+        .product-tag {
+            font-size: 12px;
+            color: var(--text-muted);
+            margin-top: 5px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .product-price {
+            font-size: 18px;
+            font-weight: 600;
+            color: var(--accent);
+        }
+
+        .add-to-cart-btn {
+            width: 100%;
+            background: none;
+            border: 1px solid var(--text-main);
+            color: var(--text-main);
+            padding: 12px;
+            margin-top: 15px;
+            cursor: pointer;
+            font-weight: 600;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            transition: all 0.3s ease;
+        }
+
+        .add-to-cart-btn:hover {
+            background-color: var(--text-main);
+            color: #000;
+        }
+
+        .add-to-cart-btn.disabled {
+            border-color: var(--border);
+            color: var(--text-muted);
+            cursor: not-allowed;
+        }
+        .add-to-cart-btn.disabled:hover {
+            background: none;
+            color: var(--text-muted);
+        }
+
+        /* --- PANALES LATERALES (CESTA E IA) --- */
+        .side-panel {
+            position: fixed;
+            top: 0;
+            width: 400px;
+            height: 100vh;
+            background-color: var(--panel-bg);
+            border-inline: 1px solid var(--border);
+            box-shadow: 0 0 40px rgba(0,0,0,0.8);
+            z-index: 200;
+            padding: 40px;
+            display: flex;
+            flex-direction: column;
+            transition: transform 0.4s cubic-bezier(0.25, 1, 0.5, 1);
+        }
+
+        #panel-cart { right: 0; transform: translateX(100%); }
+        #panel-ia { left: 0; transform: translateX(-100%); }
+
+        .side-panel.open { transform: translateX(0) !important; }
+
+        .panel-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+            border-bottom: 1px solid var(--border);
+            padding-bottom: 15px;
+        }
+
+        .panel-header h2 {
+            font-size: 20px;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            font-weight: 400;
+        }
+
+        .close-panel {
+            background: none;
+            border: none;
+            color: var(--text-main);
+            font-size: 20px;
+            cursor: pointer;
+        }
+
+        /* Contenido Cesta */
+        .cart-items {
+            flex-grow: 1;
+            overflow-y: auto;
+        }
+
+        .cart-item {
+            display: flex;
+            gap: 15px;
+            padding: 15px 0;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .cart-item img {
+            width: 70px;
+            height: 90px;
+            object-fit: cover;
+        }
+
+        .cart-item-info h4 { font-size: 16px; font-weight: 400; }
+        .cart-item-info p { color: var(--accent); margin-top: 5px; font-weight: 600; }
+
+        .remove-item {
+            background: none;
+            border: none;
+            color: #ff4b4b;
+            font-size: 12px;
+            margin-top: 10px;
+            cursor: pointer;
+        }
+
+        .checkout-btn {
+            width: 100%;
+            background-color: var(--accent);
+            color: #000;
+            border: none;
+            padding: 15px;
+            font-weight: 600;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            cursor: pointer;
+            margin-top: 20px;
+        }
+
+        /* Contenido IA */
+        .chat-container {
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .chat-messages {
+            flex-grow: 1;
+            overflow-y: auto;
+            margin-bottom: 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .msg {
+            padding: 12px 16px;
+            border-radius: 4px;
+            max-width: 85%;
+            font-size: 14px;
+            line-line: 1.4;
+        }
+
+        .msg.system {
+            background-color: #1a1a1a;
+            color: var(--text-main);
+            align-self: flex-start;
+            border-left: 2px solid var(--accent);
+        }
+
+        .chat-input-area {
+            display: flex;
+            border: 1px solid var(--border);
+        }
+
+        .chat-input-area input {
+            flex-grow: 1;
+            background: none;
+            border: none;
+            padding: 12px;
+            color: white;
+            outline: none;
+        }
+
+        .chat-input-area button {
+            background: none;
+            border: none;
+            color: var(--accent);
+            padding: 0 15px;
+            cursor: pointer;
+        }
+
+        /* --- MODAL DE CONFIRMACIÓN VIP (TEMPORIZADOR) --- */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background-color: rgba(5, 5, 5, 0.85);
+            backdrop-filter: blur(8px);
+            z-index: 300;
+            display: grid;
+            place-items: center;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.4s ease;
+        }
+
+        .modal-overlay.open {
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        .modal-box {
+            background-color: var(--panel-bg);
+            border: 1px solid var(--accent);
+            padding: 40px;
+            max-width: 500px;
+            width: 90%;
+            text-align: center;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.5);
+        }
+
+        .modal-box h3 {
+            font-size: 20px;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            margin-bottom: 20px;
+            color: var(--accent);
+        }
+
+        .modal-box p {
+            color: var(--text-muted);
+            font-size: 15px;
+            line-height: 1.6;
+            margin-bottom: 30px;
+        }
+
+        .modal-buttons {
+            display: flex;
+            gap: 20px;
+        }
+
+        .modal-btn {
+            flex: 1;
+            padding: 12px;
+            border: 1px solid var(--text-main);
+            background: none;
+            color: var(--text-main);
+            cursor: pointer;
+            font-weight: 600;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            transition: all 0.3s ease;
+        }
+
+        .modal-btn.confirm {
+            background-color: var(--text-main);
+            color: #000;
+        }
+
+        .modal-btn.confirm:hover {
+            background-color: var(--accent);
+            border-color: var(--accent);
+        }
+
+        .modal-btn.cancel:hover {
+            border-color: #ff4b4b;
+            color: #ff4b4b;
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <button class="icon-btn" onclick="togglePanel('panel-ia')"><i class="fa-solid fa-robot"></i> CONCIERGE</button>
+        <div class="logo">STUDIO <span>M</span></div>
+        <div class="nav-icons">
+            <span class="timer-display" id="nav-timer"><i class="fa-regular fa-clock"></i> 15:00</span>
+            <button class="icon-btn"><i class="fa-regular fa-heart"></i></button>
+            <button class="icon-btn" onclick="togglePanel('panel-cart')">
+                <i class="fa-solid fa-bag-shopping"></i>
+                <span class="badge" id="cart-count">0</span>
+            </button>
+        </div>
+    </header>
+
+    <section class="hero">
+        <h1>Boutique d'Archive</h1>
+        <p>Piezas únicas seleccionadas meticulosamente. Ediciones estrictamente limitadas.</p>
+    </section>
+
+    <main class="catalog">
+        <article class="product-card" id="prod_01">
+            <div class="img-container">
+                <button class="fav-card-btn" onclick="toggleFav('prod_01')"><i class="fa-solid fa-heart"></i></button>
+                <img src="https://images.unsplash.com/photo-1509281373149-e957c6296406?q=80&w=600" alt="Prenda Premium">
+            </div>
+            <div class="product-info">
+                <div>
+                    <h3 class="product-title">Chaqueta Varsity Vintage</h3>
+                    <p class="product-tag">Pieza Única / Talla L</p>
+                </div>
+                <span class="product-price">180€</span>
+            </div>
+            <button class="add-to-cart-btn" id="btn_prod_01" onclick="requestReserve('prod_01', 'Chaqueta Varsity Vintage', 180, 'https://images.unsplash.com/photo-1509281373149-e957c6296406?q=80&w=600')">Adquirir pieza</button>
+        </article>
+
+        <article class="product-card" id="prod_02">
+            <div class="img-container">
+                <button class="fav-card-btn" onclick="toggleFav('prod_02')"><i class="fa-solid fa-heart"></i></button>
+                <img src="https://images.unsplash.com/photo-1556905055-8f358a7a47b2?q=80&w=600" alt="Prenda Premium">
+            </div>
+            <div class="product-info">
+                <div>
+                    <h3 class="product-title">Botas de Piel High-End</h3>
+                    <p class="product-tag">Pieza Única / Talla 42</p>
+                </div>
+                <span class="product-price">240€</span>
+            </div>
+            <button class="add-to-cart-btn" id="btn_prod_02" onclick="requestReserve('prod_02', 'Botas de Piel High-End', 240, 'https://images.unsplash.com/photo-1556905055-8f358a7a47b2?q=80&w=600')">Adquirir pieza</button>
+        </article>
+    </main>
+
+    <div class="side-panel" id="panel-cart">
+        <div class="panel-header">
+            <h2>Tu Selección</h2>
+            <button class="close-panel" onclick="togglePanel('panel-cart')"><i class="fa-solid fa-xmark"></i></button>
+        </div>
+        <div class="cart-items" id="cart-items-container">
+            </div>
+        <button class="checkout-btn">Proceder al pago</button>
+    </div>
+
+    <div class="side-panel" id="panel-ia">
+        <div class="panel-header">
+            <h2>Concierge M</h2>
+            <button class="close-panel" onclick="togglePanel('panel-ia')"><i class="fa-solid fa-xmark"></i></button>
+        </div>
+        <div class="chat-container">
+            <div class="chat-messages">
+                <div class="msg system">Bienvenido a STUDIO M. Soy tu asistente silencioso. ¿Tienes dudas sobre las medidas o condiciones de alguna pieza de archivo?</div>
+            </div>
+            <div class="chat-input-area">
+                <input type="text" placeholder="Escribe tu consulta...">
+                <button><i class="fa-solid fa-paper-plane"></i></button>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal-overlay" id="reserve-modal">
+        <div class="modal-box">
+            <h3>Verificación de Intención</h3>
+            <p>¿Vas a adquirir este artículo exclusivo? Al confirmar, se te asignará un temporizador de 15 minutos para completar la compra. Pasado el tiempo, la pieza se liberará para otros miembros.</p>
+            <div class="modal-buttons">
+                <button class="modal-btn cancel" onclick="closeReserveModal()">No, seguir viendo</button>
+                <button class="modal-btn confirm" id="modal-confirm-btn">Sí, reservar pieza</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let cart = null; // Aloja el producto reservado (solo permitimos 1 artículo exclusivo a la vez)
+        let timer = null;
+        let timeLeft = 15 * 60; // 15 minutos en segundos
+        let pendingProduct = null;
+
+        // Abrir y cerrar paneles laterales
+        function togglePanel(id) {
+            document.getElementById(id).classList.toggle('open');
+        }
+
+        // Sistema de Favoritos (Persistente con LocalStorage)
+        function toggleFav(id) {
+            let favs = JSON.parse(localStorage.getItem('studio_m_favs')) || [];
+            const btn = document.querySelector(`#${id} .fav-card-btn`);
+            
+            if(favs.includes(id)) {
+                favs = favs.filter(item => item !== id);
+                btn.classList.remove('active');
+            } else {
+                favs.push(id);
+                btn.classList.add('active');
+            }
+            localStorage.setItem('studio_m_favs', JSON.stringify(favs));
+        }
+
+        // Cargar favoritos guardados al iniciar la página
+        window.onload = function() {
+            let favs = JSON.parse(localStorage.getItem('studio_m_favs')) || [];
+            favs.forEach(id => {
+                const btn = document.querySelector(`#${id} .fav-card-btn`);
+                if(btn) btn.classList.add('active');
+            });
+        }
+
+        // Solicitar Reserva (Abre el Modal)
+        function requestReserve(id, title, price, img) {
+            if (cart) {
+                alert("Ya tienes un artículo exclusivo reservado. Termina la compra o espera a que expire.");
+                return;
+            }
+            pendingProduct = { id, title, price, img };
+            document.getElementById('reserve-modal').classList.add('open');
+        }
+
+        function closeReserveModal() {
+            document.getElementById('reserve-modal').classList.remove('open');
+            pendingProduct = null;
+        }
+
+        // Confirmar Reserva e Iniciar Cuenta Atrás de 15 Minutos
+        document.getElementById('modal-confirm-btn').onclick = function() {
+            if (!pendingProduct) return;
+            
+            cart = pendingProduct;
+            closeReserveModal();
+            
+            // Actualizar interfaz del producto
+            const actionBtn = document.getElementById(`btn_${cart.id}`);
+            actionBtn.innerText = "Reservado en Cesta";
+            actionBtn.classList.add('disabled');
+            actionBtn.disabled = true;
+
+            // Renderizar en la cesta lateral
+            const container = document.getElementById('cart-items-container');
+            container.innerHTML = `
+                <div class="cart-item" id="item_${cart.id}">
+                    <img src="${cart.img}" alt="${cart.title}">
+                    <div class="cart-item-info">
+                        <h4>${cart.title}</h4>
+                        <p>${cart.price}€</p>
+                        <button class="remove-item" onclick="releaseProduct()">Cancelar reserva</button>
+                    </div>
+                </div>
+            `;
+
+            // Actualizar Contadores del Header
+            document.getElementById('cart-count').innerText = "1";
+            document.getElementById('nav-timer').style.display = "inline-block";
+            
+            // Iniciar Reloj
+            timeLeft = 15 * 60;
+            startTimer();
+            togglePanel('panel-cart'); // Desplegar cesta automáticamente para una experiencia premium
+        }
+
+        // Controlador del Reloj
+        function startTimer() {
+            clearInterval(timer);
+            timer = setInterval(() => {
+                timeLeft--;
+                let minutes = Math.floor(timeLeft / 60);
+                let seconds = timeLeft % 60;
+                
+                // Formateo con ceros a la izquierda
+                minutes = minutes < 10 ? '0' + minutes : minutes;
+                seconds = seconds < 10 ? '0' + seconds : seconds;
+                
+                document.getElementById('nav-timer').innerHTML = `<i class="fa-regular fa-clock"></i> ${minutes}:${seconds}`;
+
+                if (timeLeft <= 0) {
+                    clearInterval(timer);
+                    alert("El tiempo de reserva ha expirado. La pieza ha sido devuelta al catálogo.");
+                    releaseProduct();
+                }
+            }, 1000);
+        }
+
+        // Liberar Producto (Cuando expira o se cancela manualmente)
+        function releaseProduct() {
+            if (!cart) return;
+
+            // Restaurar botón de la tienda
+            const actionBtn = document.getElementById(`btn_${cart.id}`);
+            if(actionBtn) {
+                actionBtn.innerText = "Adquirir pieza";
+                actionBtn.classList.remove('disabled');
+                actionBtn.disabled = false;
+            }
+
+            // Limpiar cesta e interfaz
+            document.getElementById('cart-items-container').innerHTML = '';
+            document.getElementById('cart-count').innerText = "0";
+            document.getElementById('nav-timer').style.display = "none";
+            
+            clearInterval(timer);
+            cart = null;
+        }
+    </script>
+</body>
+</html>
